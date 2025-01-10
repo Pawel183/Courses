@@ -1,7 +1,9 @@
-package com.loose.coupling;
+package com.loose.coupling.providers;
 
 // A - MySQL, PostgresSQL, Oracle, etc.
 // B - Web Service, MongoDB, etc.
+
+import com.loose.coupling.UserDataProvider;
 
 public class UserDatabaseProvider implements UserDataProvider {
     @Override

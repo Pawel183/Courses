@@ -1,4 +1,6 @@
-package com.loose.coupling;
+package com.loose.coupling.providers;
+
+import com.loose.coupling.UserDataProvider;
 
 public class WebServiceDataProvider implements UserDataProvider {
 

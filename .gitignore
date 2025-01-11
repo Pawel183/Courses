@@ -57,7 +57,7 @@ build/
 ### VS Code ###
 .vscode/
 
-.gitattributes
-mvnw
-mvnw.cmd
-*.mvn
+EmbarkX/.gitattributes
+EmbarkX/mvnw
+EmbarkX/mvnw.cmd
+EmbarkX/.mvn

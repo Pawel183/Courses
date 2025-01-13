@@ -1,7 +1,9 @@
 package com.embarkx.service;
 
 import com.embarkx.model.Category;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +30,9 @@ public class CategoryServiceImpl implements CategoryService {
     public String deleteCategory(long categoryId) {
         Category category = categories.stream()
                 .filter(c -> c.getCategoryId() == categoryId)
-                .findFirst().orElse(null);
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
 
-        if (category == null)
-            return "Category not found";
         categories.remove(category);
 
         return "Category with categoryId: " + categoryId + " deleted successfully !!";

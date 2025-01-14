@@ -1,19 +1,26 @@
 package com.embarkx.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Category {
-    private long categoryId;
+    @Id
+    private Long categoryId;
     private String categoryName;
 
-    public Category(long categoryId, String categoryName) {
+    public Category() {}
+
+    public Category(Long categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
 
-    public long getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(long categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

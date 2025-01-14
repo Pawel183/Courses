@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String deleteCategory(long categoryId) {
+    public String deleteCategory(Long categoryId) {
         Category category = categories.stream()
                 .filter(c -> c.getCategoryId() == categoryId)
                 .findFirst()
@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String updateCategory(long categoryId, Category category) {
+    public String updateCategory(Long categoryId, Category category) {
         Category categoryToUpdate = categories.stream()
                 .filter(c -> c.getCategoryId() == categoryId)
                 .findFirst()

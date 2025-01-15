@@ -1,5 +1,6 @@
 package com.embarkx.exceptions;
 
+import com.embarkx.payload.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -28,14 +29,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> resourceNotFoundException(ResourceNotFoundException e) {
+    public ResponseEntity<ApiResponse> resourceNotFoundException(ResourceNotFoundException e) {
         String message = e.getMessage();
-        return new ResponseEntity<String>(message, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ApiResponse>(new ApiResponse(message, false), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> apiException(ApiException e) {
+    public ResponseEntity<ApiResponse> apiException(ApiException e) {
         String message = e.getMessage();
-        return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ApiResponse>(new ApiResponse(message, false), HttpStatus.BAD_REQUEST);
     }
 }

@@ -3,7 +3,10 @@ package com.embarkx.service;
 import com.embarkx.exceptions.ApiException;
 import com.embarkx.exceptions.ResourceNotFoundException;
 import com.embarkx.model.Category;
+import com.embarkx.payload.CategoryDTO;
+import com.embarkx.payload.CategoryResponse;
 import com.embarkx.repo.CategoryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,24 +18,32 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public List<Category> getAllCategories() {
+    public CategoryResponse getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
 
-        if (categories.isEmpty()) {
+        if (categories.isEmpty())
             throw new ApiException("No categories created till now");
-        }
 
-        return categories;
+        List<CategoryDTO> categoryDTOS = categories.stream()
+                .map(category -> modelMapper.map(category, CategoryDTO.class))
+                .toList();
+
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setContent(categoryDTOS);
+
+        return categoryResponse;
     }
 
     @Override
     public void createCategory(Category category) {
         Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
 
-        if (savedCategory != null) {
+        if (savedCategory != null)
             throw new ApiException("Category with the name " + category.getCategoryName() + " already exist");
-        }
 
         categoryRepository.save(category);
     }
@@ -51,9 +62,8 @@ public class CategoryServiceImpl implements CategoryService {
     public String updateCategory(Long categoryId, Category category) {
         Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
 
-        if (existingCategory != null) {
+        if (existingCategory != null)
             throw new ApiException("Category with the name " + category.getCategoryName() + " already exist");
-        }
 
         Category categoryToUpdate = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));

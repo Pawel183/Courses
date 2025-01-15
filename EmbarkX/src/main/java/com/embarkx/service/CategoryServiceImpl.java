@@ -39,29 +39,31 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createCategory(Category category) {
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        Category category = modelMapper.map(categoryDTO, Category.class);
         Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
 
         if (savedCategory != null)
             throw new ApiException("Category with the name " + category.getCategoryName() + " already exist");
 
-        categoryRepository.save(category);
+        return modelMapper.map(categoryRepository.save(category), CategoryDTO.class);
     }
 
     @Override
-    public String deleteCategory(Long categoryId) {
+    public CategoryDTO deleteCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         categoryRepository.delete(category);
 
-        return "Category with categoryId: " + categoryId + " deleted successfully!";
+        return modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
-    public String updateCategory(Long categoryId, Category category) {
-        Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+    public CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO) {
+        Category category = modelMapper.map(categoryDTO, Category.class);
 
+        Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
         if (existingCategory != null)
             throw new ApiException("Category with the name " + category.getCategoryName() + " already exist");
 
@@ -69,8 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         categoryToUpdate.setCategoryName(category.getCategoryName());
-        categoryRepository.save(categoryToUpdate);
 
-        return "Category with categoryId: " + categoryId + " updated successfully!";
+        return modelMapper.map(categoryRepository.save(categoryToUpdate), CategoryDTO.class);
     }
 }

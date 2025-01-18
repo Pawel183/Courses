@@ -5,16 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocialProfile {
+public class SocialGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long groupId;
 
-    @OneToOne
-    @JoinColumn(name = "social_user")
-    private SocialUser socialUser;
+    @ManyToMany(mappedBy = "socialGroups")
+    private Set<SocialUser> socialUsers = new HashSet<>();
 }

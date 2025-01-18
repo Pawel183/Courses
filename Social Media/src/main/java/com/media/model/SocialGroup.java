@@ -17,14 +17,14 @@ import java.util.Set;
 public class SocialGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long groupId;
+    private Long id;
 
-    @ManyToMany(mappedBy = "socialGroups")
+    @ManyToMany(mappedBy = "groups")
     @JsonIgnore
     private Set<SocialUser> socialUsers = new HashSet<>();
 
     @Override
-    public int hashCode() {
-        return Objects.hash(groupId);
+    public int hashCode(){
+        return Objects.hash(id);
     }
 }

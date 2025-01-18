@@ -47,10 +47,10 @@ public class DataInitializer {
             groupRepository.save(group1);
             groupRepository.save(group2);
             // Associate users with groups
-            user1.getSocialGroups().add(group1);
-            user2.getSocialGroups().add(group1);
-            user2.getSocialGroups().add(group2);
-            user3.getSocialGroups().add(group2);
+            user1.getGroups().add(group1);
+            user2.getGroups().add(group1);
+            user2.getGroups().add(group2);
+            user3.getGroups().add(group2);
             // Save users back to database to update associations
             userRepository.save(user1);
             userRepository.save(user2);

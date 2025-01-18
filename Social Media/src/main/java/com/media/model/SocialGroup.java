@@ -1,11 +1,13 @@
 package com.media.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -18,5 +20,11 @@ public class SocialGroup {
     private Long groupId;
 
     @ManyToMany(mappedBy = "socialGroups")
+    @JsonIgnore
     private Set<SocialUser> socialUsers = new HashSet<>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId);
+    }
 }

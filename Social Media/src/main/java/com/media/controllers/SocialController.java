@@ -1,5 +1,6 @@
 package com.media.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.media.model.SocialUser;
 import com.media.service.SocialService;
 import org.springframework.beans.factory.annotation.Autowired;

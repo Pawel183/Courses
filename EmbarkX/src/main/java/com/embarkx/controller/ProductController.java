@@ -49,7 +49,7 @@ public class ProductController {
             @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder
     ) {
         ProductResponse productResponse = productService.searchProductByKeyword(keyword, pageNumber, pageSize, sortBy, sortOrder);
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+        return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
     }
 
     @PostMapping("/admin/categories/{categoryId}/product")
@@ -58,5 +58,13 @@ public class ProductController {
     {
         ProductDTO productDTO = productService.addProduct(categoryId, product);
         return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody Product product,
+                                                    @PathVariable Long productId)
+    {
+        ProductDTO productDTO = productService.updateProduct(productId, product);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 }

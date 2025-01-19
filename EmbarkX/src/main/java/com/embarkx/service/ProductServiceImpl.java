@@ -51,11 +51,45 @@ public class ProductServiceImpl implements ProductService {
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sort);
+
         Page<Product> productPage = productRepository.findAll(pageDetails);
         List<Product> products = productPage.getContent();
 
         if (products.isEmpty())
             throw new ApiException("No products created till now");
+
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .toList();
+
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setContent(productDTOS);
+        productResponse.setPaginationData(
+                productPage.getNumber(),
+                productPage.getSize(),
+                productPage.getTotalElements(),
+                productPage.getTotalPages(),
+                productPage.isLast()
+        );
+
+        return productResponse;
+    }
+
+    @Override
+    public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+        Sort sort = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sort);
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+
+        Page<Product> productPage = productRepository.findByCategory(category ,pageDetails);
+        List<Product> products = productPage.getContent();
+
+        if (products.isEmpty())
+            throw new ApiException("No products in category '" + category.getCategoryName() + "' created till now");
 
         List<ProductDTO> productDTOS = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))

@@ -10,6 +10,7 @@ import com.embarkx.repo.CategoryRepository;
 import com.embarkx.repo.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${project.image}")
+    private String path;
 
     @Override
     public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
@@ -181,28 +188,11 @@ public class ProductServiceImpl implements ProductService {
         Product productToUpdate = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
-        String path = "images/";
-        String fileName = uploadImage(path, image);
+        String fileName = fileService.uploadImage(path, image);
         productToUpdate.setImage(fileName);
 
         Product savedProduct = productRepository.save(productToUpdate);
 
         return modelMapper.map(savedProduct, ProductDTO.class);
-    }
-
-    private String uploadImage(String path, MultipartFile file) throws IOException {
-        String originalFileName = file.getOriginalFilename();
-        String randomId = UUID.randomUUID().toString();
-        assert originalFileName != null;
-        String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf(".")));
-        String filePath = path + File.separator + fileName;
-
-        File folder = new File(path);
-        if (!folder.exists())
-            folder.mkdir();
-
-        Files.copy(file.getInputStream(), Paths.get(filePath));
-
-        return fileName;
     }
 }

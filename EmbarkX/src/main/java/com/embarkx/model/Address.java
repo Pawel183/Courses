@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,16 @@ public class Address {
     @Size(min = 6, message = "Pin code name must be at least 6 characters")
     private String pinCode;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "addresses")
     private List<User> users = new ArrayList<>();
+
+    public Address(String street, String buildingName, String city, String state, String country, String pinCode) {
+        this.street = street;
+        this.buildingName = buildingName;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.pinCode = pinCode;
+    }
 }

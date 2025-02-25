@@ -1,8 +1,11 @@
 package com.embarkx.controller;
 
 import com.embarkx.model.Category;
+import com.embarkx.payload.CategoryDTO;
+import com.embarkx.payload.CategoryResponse;
 import com.embarkx.service.CategoryService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +21,20 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping("/public/categories")
-    public ResponseEntity<List<Category>> getCategories() {
-        List<Category> categories = categoryService.getAllCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    public ResponseEntity<CategoryResponse> getCategories() {
+        CategoryResponse categoryResponse = categoryService.getAllCategories();
+
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
     @PostMapping("/public/categories")
-    public ResponseEntity<String> addCategory(@Valid @RequestBody Category category) {
-        categoryService.createCategory(category);
-        return new ResponseEntity<>("Category added successfully!", HttpStatus.CREATED);
+    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO){
+        CategoryDTO savedCategoryDTO = categoryService.createCategory(categoryDTO);
+        return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")

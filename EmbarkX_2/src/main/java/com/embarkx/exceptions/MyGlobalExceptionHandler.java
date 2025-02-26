@@ -1,5 +1,6 @@
 package com.embarkx.exceptions;
 
+import com.embarkx.payload.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,16 +29,18 @@ public class MyGlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> myResourceNotFoundException(ResourceNotFoundException resourceNotFoundException) {
+    public ResponseEntity<APIResponse> myResourceNotFoundException(ResourceNotFoundException resourceNotFoundException) {
         String message = resourceNotFoundException.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
 
-        return new ResponseEntity<String>(message, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<APIResponse>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> myApiException(ApiException apiException) {
+    public ResponseEntity<APIResponse> myApiException(ApiException apiException) {
         String message = apiException.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
 
-        return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<APIResponse>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 }

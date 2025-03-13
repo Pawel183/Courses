@@ -1,0 +1,2 @@
+docker cp test/. s2_node:/test  <- Copy to container
+docker cp s2_node:/test test    <- Copy from container (Useful if there is a log file)

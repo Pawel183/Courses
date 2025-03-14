@@ -1,0 +1,14 @@
+Remove image
+    docker rmi REPO:TAG
+
+Remove container
+    docker rm NAME
+
+Build image with repo and tag name
+    docker build -t REPO:TAG .
+
+Run container with name for specific image
+    docker run -d --name NAME -p PORT_ON_OUR_MACHINE:PORT_IN_CODE IMAGE
+
+Run container in interactive mode that will be auto removed  
+    docker run --rm -it --name NAME IMAGE

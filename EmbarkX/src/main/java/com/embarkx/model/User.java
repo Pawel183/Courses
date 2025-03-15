@@ -14,42 +14,41 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Table(
-        name = "users",
+@Table(name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email"),
-        }
-)
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(max = 20)
     @Column(name = "username")
     private String userName;
 
-    @Email
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(max = 50)
+    @Email
     @Column(name = "email")
     private String email;
 
     @NotBlank
-    @Size(min = 3, max = 120)
+    @Size(max = 120)
     @Column(name = "password")
     private String password;
 
-    public User(String email, String password, String userName) {
+    public User(String userName, String email, String password) {
+        this.userName = userName;
         this.email = email;
         this.password = password;
-        this.userName = userName;
     }
 
+    @Setter
+    @Getter
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.EAGER
@@ -61,14 +60,8 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ToString.Exclude
-    @OneToMany(
-            mappedBy = "user",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            orphanRemoval = true // Remove products when user is removed
-    )
-    private Set<Product> products = new HashSet<>();
-
+    @Getter
+    @Setter
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
@@ -78,4 +71,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "address_id")
     )
     private List<Address> addresses = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            orphanRemoval = true)
+    private Set<Product> products;
 }

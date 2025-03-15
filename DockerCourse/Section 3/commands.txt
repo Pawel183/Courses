@@ -1,0 +1,29 @@
+docker logs CONTAINER_NAME                                                          <- Logi containera
+
+docker build -t REPO:TAG .                                                          <- Stworzenie image z Tagiem
+
+docker run -d -p 3000:80 --rm --name NAME IMAGE(REPO:TAG)                           <- Stworzenie containera z nazwą na porcie 3000, 
+                                                                                        co się automatycznie usunie po stop
+
+docker volume ls                                                                    <- Wyświetlenie wszystkich volume 
+
+docker run -d -p 3000:80 --rm --name NAME -v NAME_VOLUME:PATH IMAGE(REPO:TAG)       <- Stworzenie containera z Volume named który zostanie zapisany,
+                                                                                        np. zostanie wyswietlony przez 'docker volume ls'
+                                                                                        (trzeba stworzyć container z tym samym Name przy -v flag co wcześniej)
+
+docker run -d -p 3000:80 --rm --name NAME -v "LOCAL_PATH:PATH" IMAGE(REPO:TAG)      <- Stworzenie volume patrzącego na folder w którym mamy projekt, dzięki
+                                                                                        czemu zmiany w naszych lokalnych plikach będą widoczne w containerze.
+                                                                                        LOCAL_PATH powinno być pełną scieżką do folderu (-v "$(pwd):/app")
+
+
+docker run -d -p 3000:80                                              <- Startuje kontener w detached i mapuje port 3000 na lokalnym do portu 80 w kontenerze
+    --rm --name feedback-test \                                       <- Automatyczne usunięcie po zastopowaniu i nazwanie kontenera             
+    -v feedback:/app/feedback \                                       <- Tworzy i podłącza nazwany Volume (feedback) do katalogu /app/feedback w kontenerze.
+                                                                        🔹 Dane w tym Volume będą trwałe, nawet po usunięciu kontenera.
+    -v "$(pwd):/app" \                                                <- Podłącza bieżący katalog (projekt) do /app w kontenerze.
+                                                                        🔹 Dzięki temu zmiany w kodzie na lokalnym komputerze są automatycznie 
+                                                                            widoczne w kontenerze (przydatne do developmentu).
+    -v /app/node_modules \                                            <- Zabezpiecza katalog node_modules przed nadpisaniem z lokalnego katalogu.
+                                                                            Umożliwia instalację zależności tylko w kontenerze, bez wpływu na lokalne pliki.
+    feedback-node:volumes                                             <-  Uruchamia kontener z obrazu
+

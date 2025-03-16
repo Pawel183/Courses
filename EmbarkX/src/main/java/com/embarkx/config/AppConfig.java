@@ -56,6 +56,11 @@ public class AppConfig {
                 userRepository.save(user1);
             }
 
+            if (!userRepository.existsByUserName("user2")) {
+                User user2 = new User("user2", "user2@example.com", passwordEncoder.encode("password2"));
+                userRepository.save(user2);
+            }
+
             if (!userRepository.existsByUserName("seller1")) {
                 User seller1 = new User("seller1", "seller1@example.com", passwordEncoder.encode("password2"));
                 userRepository.save(seller1);
@@ -68,6 +73,11 @@ public class AppConfig {
 
             // Update roles for existing users
             userRepository.findByUserName("user1").ifPresent(user -> {
+                user.setRoles(userRoles);
+                userRepository.save(user);
+            });
+
+            userRepository.findByUserName("user2").ifPresent(user -> {
                 user.setRoles(userRoles);
                 userRepository.save(user);
             });

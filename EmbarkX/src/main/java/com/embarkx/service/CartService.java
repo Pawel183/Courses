@@ -11,6 +11,9 @@ public interface CartService {
     List<CartDTO> getAllCarts();
     CartDTO getUserCart(String emailId, Long cartId);
 
-    @Transactional
     CartDTO updateProductQuantityInCart(Long productId, Integer quantity);
+
+    String deleteProductFromCart(Long cartId, Long productId);
+
+    void updateProductInCarts(Long cartId, Long productId);
 }

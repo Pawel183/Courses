@@ -17,13 +17,20 @@ docker run -d -p 3000:80 --rm --name NAME -v "LOCAL_PATH:PATH" IMAGE(REPO:TAG)  
 
 
 docker run -d -p 3000:80                                              <- Startuje kontener w detached i mapuje port 3000 na lokalnym do portu 80 w kontenerze
-    --rm --name feedback-test \                                       <- Automatyczne usunięcie po zastopowaniu i nazwanie kontenera             
-    -v feedback:/app/feedback \                                       <- Tworzy i podłącza nazwany Volume (feedback) do katalogu /app/feedback w kontenerze.
+    --rm --name feedback-test                                         <- Automatyczne usunięcie po zastopowaniu i nazwanie kontenera             
+    -v feedback:/app/feedback                                         <- Tworzy i podłącza nazwany Volume (feedback) do katalogu /app/feedback w kontenerze.
                                                                         🔹 Dane w tym Volume będą trwałe, nawet po usunięciu kontenera.
-    -v "$(pwd):/app" \                                                <- Podłącza bieżący katalog (projekt) do /app w kontenerze.
+    -v "$(pwd):/app"                                                  <- Podłącza bieżący katalog (projekt) do /app w kontenerze.
                                                                         🔹 Dzięki temu zmiany w kodzie na lokalnym komputerze są automatycznie 
                                                                             widoczne w kontenerze (przydatne do developmentu).
-    -v /app/node_modules \                                            <- Zabezpiecza katalog node_modules przed nadpisaniem z lokalnego katalogu.
+    -v /app/node_modules                                              <- Zabezpiecza katalog node_modules przed nadpisaniem z lokalnego katalogu.
                                                                             Umożliwia instalację zależności tylko w kontenerze, bez wpływu na lokalne pliki.
     feedback-node:volumes                                             <-  Uruchamia kontener z obrazu
 
+... "LOCAL_PATH:PATH:ro" ...                                          <- Tworzy volume w trybie read-only
+
+
+docker run ... --env PORT=8000 ...                                    <- Ustawia zmienną env PORT na 8000 (wiele zmiennych to multi --e: --e PORT.. --e TEST)
+docker run ... --env-file .env ...                                    <- Używa zmiennych env z pliku .env
+
+docker build -t REPO:TAG --build-arg ARG_NAME=VALUE .                 <- Zbudowanie image z wykorzystaniem args, które mogą być wykorzystane w Dockerfile

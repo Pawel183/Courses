@@ -4,5 +4,10 @@
     "docker build -t goals-react ." : "Build a Docker image in frontend",
     "docker run --name mongodb --rm -d --network goals-net mongo" : "Start a MongoDB container",
     "docker run --name goals-backend -p 80:80 --rm -d --network goals-net goals-node" : "Start a backend container",
-    "docker run --name goals-frontend -p 3000:3000 --rm -d -it goals-react" : "Start a frontend container"
+    "docker run --name goals-frontend -p 3000:3000 --rm -d -it goals-react" : "Start a frontend container",
+
+    "Data Persistence" : "Create a volume for data persistence",
+    "docker run --name mongodb -v data:/data/db --rm -d --network goals-net -e MONGO_INITDB_ROOT_USERNAME=test -e MONGO_INITDB_ROOT_PASSWORD=password mongo": "Start a MongoDB container with data persistence",
+    "docker run --name goals-backend -v PATH:/app -v logs:/app/logs -v /app/node_modules -p 80:80 --rm -d --network goals-net goals-node" : "Start a backend container with data persistence",
+    "docker run --name goals-frontend -v PATH:/app/src -p 3000:3000 --rm -d -it goals-react" : ""
 }

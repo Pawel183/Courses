@@ -12,4 +12,7 @@ EXPOSE 80
 
 RUN mkdir -p /app/logs
 
-CMD ["node", "app.js"]
+ENV USERNAME=test
+ENV PASSWORD=password
+
+CMD ["npm", "start"]

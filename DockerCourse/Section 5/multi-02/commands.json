@@ -1,0 +1,8 @@
+{
+    "docker network create goals " : "Create a network",
+    "docker build -t goals-node ." : "Build a Docker image in backend",
+    "docker build -t goals-react ." : "Build a Docker image in frontend",
+    "docker run --name mongodb --rm -d --network goals-net mongo" : "Start a MongoDB container",
+    "docker run --name goals-backend -p 80:80 --rm -d --network goals-net goals-node" : "Start a backend container",
+    "docker run --name goals-frontend -p 3000:3000 --rm -d -it goals-react" : "Start a frontend container"
+}

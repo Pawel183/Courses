@@ -1,0 +1,16 @@
+{
+  "CONTAINER TO CONTAINER": "",
+  "host.docker.internal": "host address",
+  "docker run -d --name mongodb mongo": "stworzenie kontenera z bazą danych MongoDB",
+  "docker container inspect mongodb": "informacje o kontenerze, interesuje nas IPAddress w NetworkSettings",
+  "IPAddress": "Połączenie się z DB, np. w funkcji mongoose.connect('mongodb://IPAddress:27017/dbname')",
+  "": "",
+  "NETWORKS": "",
+  "docker network create NETWORK_NAME": "stworzenie sieci",
+  "docker network ls": "lista sieci",
+  "docker network inspect NETWORK_NAME": "informacje o sieci",
+  "docker run -d --name mongodb --network NET_NAME mongo": "stworzenie kontenera z bazą danych MongoDB w sieci",
+  "mongodb://CONTAINER_NAME/swfavorites": "Połączenie się z DB, mongoose.connect('mongodb://CONTAINER_NAME/dbname')",
+  "docker run --name N --network NET_NAME -d --rm IMAGE_NAME": "stworzenie kontenera danej w sieci",
+  "port niepotrzebny": "Przy łączeniu się z siecią nie trzeba podawać portu"
+}

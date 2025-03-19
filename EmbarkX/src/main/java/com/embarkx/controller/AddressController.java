@@ -8,10 +8,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -31,5 +30,30 @@ public class AddressController {
         AddressDTO createdAddressDTO = addressService.createAddress(addressDTO, user);
 
         return new ResponseEntity<>(createdAddressDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/addresses")
+    public ResponseEntity<List<AddressDTO>> getAllAddresses() {
+        List<AddressDTO> addressList = addressService.getAllAddresses();
+
+        return new ResponseEntity<>(addressList, HttpStatus.OK);
+    }
+
+    @GetMapping("/addresses/{addressId}")
+    public ResponseEntity<AddressDTO> getAddressById(
+            @PathVariable Long addressId
+    ) {
+        AddressDTO addressDTO = addressService.getAddressById(addressId);
+
+        return new ResponseEntity<>(addressDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/addresses")
+    public ResponseEntity<List<AddressDTO>> getAllAddressesByUser() {
+        User user = authUtil.loggedInUser();
+
+        List<AddressDTO> addressDTOs = addressService.getAllAddressesByUser(user);
+
+        return new ResponseEntity<>(addressDTOs, HttpStatus.OK);
     }
 }

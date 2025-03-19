@@ -20,17 +20,14 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Override
     public AddressDTO createAddress(AddressDTO addressDTO, User user) {
         Address address = modelMapper.map(addressDTO, Address.class);
         address.setUser(user);
+
         List<Address> addressList = user.getAddresses();
         addressList.add(address);
-
-        userRepository.save(user);
+        user.setAddresses(addressList);
 
         Address createdAddress = addressRepository.save(address);
 

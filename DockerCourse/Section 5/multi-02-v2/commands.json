@@ -1,0 +1,7 @@
+{
+  "docker run -d --rm --name mongodb --network goals_app mongo": "Start the MongoDB container",
+  "docker build -t goals-backend .": "Build the backend image",
+  "docker run -p 8080:80 -d --rm --name goals-backend --network goals_app goals-backend": "Start the backend container",
+  "docker build -t goals_frontend .": "Build the frontend image",
+  "docker run --rm -d -p 5000:3000 --name goals_frontend --network goals_app goals_frontend": "Start the frontend container"
+}

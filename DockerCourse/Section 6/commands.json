@@ -1,0 +1,7 @@
+{
+  "docker compose up": "Uruchamia usługi i pokazuje logi",
+  "docker compose up -d": "Uruchamia usługi w tle (detached mode)",
+  "docker compose up -d --build": "Przebudowuje obrazy (jeśli były zmiany w Dockerfile) i uruchamia usługi w tle",
+  "docker compose down": "Zatrzymuje i usuwa kontenery",
+  "docker compose down -v": "Zatrzymuje i usuwa kontenery oraz wolumeny"
+}

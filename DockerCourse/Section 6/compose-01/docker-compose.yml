@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=max
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      - data:/data/db
+    # networks:
+    #   - goals-net
+  backend:
+    build: ./backend
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    image: goals-node
+    container_name: goals-backend
+    ports:
+      - "80:80"
+    env_file:
+      - ./env/backend.env
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    depends_on: # czeka na mongodb 
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    image: goals-react
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    container_name: goals-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+
+# Dodajemy tylko named-volumes
+volumes:
+  data:
+  logs:
+
+# networks:
+# goals-net: <- nie potrzebne bo w tym samym docker-compose

@@ -17,6 +17,16 @@ docker run --name mongodb \
   --network goals-net \
   mongo
 
+docker run                                → Tworzy i uruchamia nowy kontener.
+--name mongodb                            → Nadaje kontenerowi nazwę mongodb, dzięki czemu możemy się do niego łatwo odnosić.
+-e MONGO_INITDB_ROOT_USERNAME=max         → Ustawia zmienną środowiskową MONGO_INITDB_ROOT_USERNAME, czyli użytkownika root MongoDB.
+-e MONGO_INITDB_ROOT_PASSWORD=secret      → Ustawia hasło dla root MongoDB.
+-v data:/data/db                          → Tworzy wolumen o nazwie data, który mapuje na /data/db w kontenerze, aby dane bazy nie znikały po jego zatrzymaniu.
+--rm                                      → Kontener zostanie automatycznie usunięty po zatrzymaniu.
+-d                                        → Uruchamia kontener w tle (detached mode).
+--network goals-net                       → Podłącza kontener do utworzonej wcześniej sieci goals-net, co pozwala innym kontenerom na łatwą komunikację.
+mongo                                     → Określa obraz, na którym bazuje kontener (tutaj oficjalny obraz MongoDB).
+
 ---------------------
 Build Node API Image
 ---------------------
@@ -39,6 +49,19 @@ docker run --name goals-backend \
   -p 80:80 \
   goals-node
 
+docker run                   → Tworzy i uruchamia kontener.
+--name goals-backend         → Nadaje kontenerowi nazwę goals-backend.
+-e MONGODB_USERNAME=max      → Ustawia zmienną środowiskową MONGODB_USERNAME, której backend używa do łączenia z bazą.
+-e MONGODB_PASSWORD=secret   → Hasło do połączenia z MongoDB.
+-v logs:/app/logs            → Mapuje wolumen logs do katalogu /app/logs, co pozwala na zapisywanie logów.
+-v PATH:/app                 → Mapuje lokalny katalog backend do /app w kontenerze, co pozwala na szybkie testowanie zmian w kodzie bez konieczności budowania obrazu od nowa.
+-v /app/node_modules         → Tworzy anonimowy wolumen dla node_modules, żeby nie nadpisywać zależności backendu.
+--rm                         → Usuwa kontener po jego zatrzymaniu.
+-d                           → Uruchamia kontener w tle.
+--network goals-net          → Podłącza do sieci goals-net, co umożliwia komunikację z MongoDB.
+-p 80:80                     → Mapuje port 80 na hoście na port 80 w kontenerze, co oznacza, że aplikacja backendowa będzie dostępna pod http://localhost.
+goals-node                   → Określa obraz, na którym bazuje kontener.
+
 ---------------------
 Build React SPA Image
 ---------------------
@@ -56,6 +79,15 @@ docker run --name goals-frontend \
   -p 3000:3000 \
   -it \
   goals-react
+
+docker run                              → Tworzy i uruchamia kontener.
+--name goals-frontend                   → Nadaje kontenerowi nazwę goals-frontend.
+-v PATH:/app/src                        → Mapuje katalog frontend/src na lokalny /app/src, dzięki czemu można edytować kod Reacta na żywo.
+--rm                                    → Usuwa kontener po jego zatrzymaniu.
+-d                                      → Uruchamia kontener w tle.
+-p 3000:3000                            → Mapuje port 3000 hosta na port 3000 w kontenerze, dzięki czemu frontend będzie dostępny pod http://localhost:3000.
+-it                                     → Oznacza interaktywny tryb z dostępem do terminala (nie zawsze konieczne, ale może ułatwiać debugowanie).
+goals-react                             → Określa obraz, na którym bazuje kontener.
 
 ---------------------
 Stop all Containers

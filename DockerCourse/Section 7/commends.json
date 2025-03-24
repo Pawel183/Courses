@@ -1,0 +1,10 @@
+{
+    "docker run -it -d node": "Uruchamia kontener Node.js w tle, zapewniając jednocześnie interaktywny tryb i dostęp do terminala.",
+    "docker exec -it CONTAINER_NAME npm init": "Otwiera terminal w działającym kontenerze i inicjalizuje nowy projekt npm.",
+    "docker run -it node npm init": "Uruchamia nowy kontener Node.js w trybie interaktywnym i od razu inicjalizuje projekt npm.",
+    "docker run -it -v 'PATH:/app' node-util npm init": "Uruchamia kontener Node.js z zamapowanym lokalnym katalogiem PATH do katalogu /app w kontenerze i inicjalizuje projekt npm.",
+    "ENTRYPOINT in Dockerfile": "Służy do ustawienia domyślnej komendy lub programu, który będzie uruchamiany po starcie kontenera.",
+    "ENTRYPOINT ['npm']": "Ustawia 'npm' jako domyślną komendę uruchamianą po starcie kontenera, co pozwala na jego wywoływanie bezpośrednio z argumentami.",
+    "docker run -it -v 'PATH:/app' node-util install express --save": "Uruchamia kontener Node.js z zamapowanym lokalnym katalogiem PATH do katalogu /app w kontenerze i instaluje pakiet 'express' zapisując go w pliku package.json.",
+    "docker-compose run SERVICE_NAME init ": "Uruchamia usługę zdefiniowaną w pliku docker-compose.yml i inicjalizuje nowy projekt npm w jej środowisku."
+}

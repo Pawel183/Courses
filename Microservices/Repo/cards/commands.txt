@@ -1,0 +1,2 @@
+mvn compile jib:dockerBuild
+docker run -d --name cards-container -p 9000:9000 pawel183/cards:s4

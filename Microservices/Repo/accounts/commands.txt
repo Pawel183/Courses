@@ -1,0 +1,2 @@
+docker build . -t pawel183/accounts:s4
+docker run -d --name accounts-container -p 8080:8080 pawel183/accounts:s4

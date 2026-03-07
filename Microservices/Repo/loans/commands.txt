@@ -1,0 +1,2 @@
+mvn spring-boot:build-image
+docker run -d --name loans-container -p 8090:8090 pawel183/loans:s4

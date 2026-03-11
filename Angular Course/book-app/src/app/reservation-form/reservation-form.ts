@@ -33,9 +33,9 @@ export class ReservationForm implements OnInit {
     let id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
-      let reservation: Reservation | undefined = this.reservationService.getReservation(id);
-
-      if (reservation) this.reservationForm.patchValue(reservation);
+      this.reservationService.getReservation(id).subscribe((reservation) => {
+        if (reservation) this.reservationForm.patchValue(reservation);
+      });
     }
   }
 

@@ -1,0 +1,14 @@
+<div class="container">
+  <h2>Products list</h2>
+  <div class="product-list">
+    @for (product of products; track product.id) {
+      <mat-card class="product-card">
+        <img [src]="'assets/' + product.image_url" mat-card-image>
+        <mat-card-content>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+          <mat-card-subtitle>{{ product.price | currency: "USD" }}</mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

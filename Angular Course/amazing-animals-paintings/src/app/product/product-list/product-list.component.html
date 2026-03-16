@@ -1,9 +1,14 @@
 <div class="container">
   <h2>Products list</h2>
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+
   <div class="product-list">
-    @for (product of products; track product.id) {
-      <mat-card class="product-card">
-        <img [src]="'assets/' + product.image_url" mat-card-image>
+    @for (product of filteredProducts; track product.id) {
+      <mat-card class="product-card" (click)="addToCart(product)">
+        <img [src]="'assets/' + product.image_url" mat-card-image alt="">
         <mat-card-content>
           <mat-card-title>{{ product.name }}</mat-card-title>
           <mat-card-subtitle>{{ product.price | currency: "USD" }}</mat-card-subtitle>

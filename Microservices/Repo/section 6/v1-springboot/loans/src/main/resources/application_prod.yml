@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "5.1"
+
+loans:
+  message: "Loans Microservice PROD"
+  contact-details:
+    name: "Loan name PROD"
+    email: "loan-prod@loan-prod.com"
+  on-call-support:
+    - 111 (111)
+    - 222 (222)

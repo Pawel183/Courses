@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "5.2"
+
+loans:
+  message: "Loans Microservice QA"
+  contact-details:
+    name: "Loan name QA"
+    email: "loan-qa@loan-qa.com"
+  on-call-support:
+    - 111 (111)
+    - 222 (222)

@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "3.0"
+
+accounts:
+  message: "PROD Env"
+  contactDetails:
+    name: "John Doe - PROD"
+    email: "jhon.doe@gmail.com - PRDO"
+  onCallSupport:
+    - (888) 678-1234
+    - (888) 678-4563

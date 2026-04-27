@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+accounts:
+  message: "QA Env"
+  contactDetails:
+    name: "John Doe - QA"
+    email: "jhon.doe@gmail.com - QA"
+  onCallSupport:
+    - (123) 123-1234
+    - (123) 123-5432

@@ -142,7 +142,7 @@
                 <version>3.5.1</version>
                 <configuration>
                     <to>
-                        <image>pawel183/${project.artifactId}:s7</image>
+                        <image>pawel183/${project.artifactId}:s8</image>
                     </to>
                 </configuration>
             </plugin>
